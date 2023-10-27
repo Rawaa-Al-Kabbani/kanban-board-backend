@@ -1,14 +1,15 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { Task } from './task.model';
+import { TasksService } from './tasks.service';
 
+// Controller is for REST API
 @Controller('tasks')
 export class TasksController {
-  @Get()
-  findall(): string {
-    return 'This action returns all tasks.';
-  }
+  constructor(private tasksService: TasksService) {}
 
-  @Post()
-  create(): string {
-    return 'This action adds a new task..';
+  @Get()
+  async findall(): Promise<Task[]> {
+    const result = await this.tasksService.findAll();
+    return result;
   }
 }
